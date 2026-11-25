@@ -1,18 +1,50 @@
 [
   {
     "id": 1,
-    "title": "Project One",
-    "description": "A short description of this project.",
-    "tags": ["HTML", "CSS", "JavaScript"],
-    "url": "#",
-    "image": "assets/images/project1.png"
+    "category": "frontend",
+    "tag": "Frontend",
+    "title": {
+      "ar": "موقع البورتفوليو الشخصي",
+      "en": "Personal Portfolio Website"
+    },
+    "description": {
+      "ar": "موقع تعريفي متجاوب بالكامل يدعم اللغتين العربية والإنجليزية والوضع الليلي مع فلترة ديناميكية للمشاريع.",
+      "en": "Fully responsive personal portfolio supporting Arabic & English, Dark Mode, and dynamic project filtering."
+    },
+    "tech": ["HTML5", "CSS3", "JavaScript", "JSON"],
+    "liveUrl": "#",
+    "repoUrl": "https://github.com/Abdulrhman403/portfolio"
   },
   {
     "id": 2,
-    "title": "Project Two",
-    "description": "A short description of this project.",
-    "tags": ["React", "Node.js"],
-    "url": "#",
-    "image": "assets/images/project2.png"
+    "category": "backend",
+    "tag": "Backend & DB",
+    "title": {
+      "ar": "نظام إدارة بيانات تجريبي",
+      "en": "Relational Database Management System"
+    },
+    "description": {
+      "ar": "تصميم مخطط قاعدة بيانات علائقية متكاملة لإدارة العمليات والتقارير مع استعلامات محسّنة.",
+      "en": "Designed an integrated relational database schema for operations and reporting with optimized queries."
+    },
+    "tech": ["SQL", "Oracle", "ERD"],
+    "liveUrl": "#",
+    "repoUrl": "https://github.com/Abdulrhman403"
+  },
+  {
+    "id": 3,
+    "category": "security",
+    "tag": "Cybersecurity",
+    "title": {
+      "ar": "تقرير فحص وتأمين تطبيق ويب",
+      "en": "Web Application Security Assessment"
+    },
+    "description": {
+      "ar": "تحليل ثغرات تطبيقات الويب الشائعة وتطبيق حلول الحماية ضد هجمات الحقن وتزوير الطلبات.",
+      "en": "Analyzed common web vulnerabilities and implemented defenses against injection and CSRF attacks."
+    },
+    "tech": ["OWASP", "Web Security", "Linux"],
+    "liveUrl": "#",
+    "repoUrl": "https://github.com/Abdulrhman403"
   }
 ]

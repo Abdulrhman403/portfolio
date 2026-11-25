@@ -1,16 +1,306 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio | ملف الأعمال</title>
+  <title>عبدالرحمن | مطور نظم وأمن سيبراني</title>
+
+  <!-- SEO & Open Graph -->
+  <meta name="description" content="الملف الشخصي لعبدالرحمن - مطور تطبيقات ويب متكاملة (Frontend & Backend) ومهتم بالأمن السيبراني وقواعد البيانات.">
+  <meta name="keywords" content="Portfolio, Web Developer, Frontend, Backend, Cybersecurity, SQL, JavaScript">
+  <meta name="author" content="Abdulrhman">
+  <meta property="og:title" content="عبدالرحمن | مطور نظم وأمن سيبراني">
+  <meta property="og:description" content="استعراض المشاريع البرمجية، المهارات التقنية، والخبرات العملية.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Prevent Theme Flash -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('portfolio-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+    })();
+  </script>
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>المشروع جاهز للانطلاق 🚀</h1>
-  <p>تم إعداد بيئة العمل وهيكل الملفات بنجاح.</p>
 
+  <!-- Header & Navbar -->
+  <header class="header" id="header">
+    <nav class="nav container" aria-label="Main Navigation">
+      <a href="#hero" class="nav__logo">
+        <span data-i18n="nav.logo">عبدالرحمن</span><span class="dot">.</span>
+      </a>
+
+      <ul class="nav__menu" id="nav-menu">
+        <li><a href="#about" class="nav__link" data-i18n="nav.about">نبذة عني</a></li>
+        <li><a href="#skills" class="nav__link" data-i18n="nav.skills">المهارات</a></li>
+        <li><a href="#projects" class="nav__link" data-i18n="nav.projects">المشاريع</a></li>
+        <li><a href="#experience" class="nav__link" data-i18n="nav.experience">الخبرات</a></li>
+        <li><a href="#contact" class="nav__link" data-i18n="nav.contact">تواصل معي</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <button type="button" class="btn-icon" id="lang-toggle" aria-label="Switch Language">EN</button>
+        <button type="button" class="btn-icon" id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+        <button type="button" class="btn-icon nav__toggle" id="nav-toggle" aria-label="Open Menu" aria-expanded="false">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero section" id="hero">
+      <div class="container hero__container">
+        <div class="hero__content">
+          <span class="hero__badge" data-i18n="hero.greeting">أهلاً بك في مساحتي الرقمية 👋</span>
+          <h1 class="hero__title" data-i18n="hero.name">عبدالرحمن محمد</h1>
+          <p class="hero__subtitle" data-i18n="hero.role">مطور نظم معلومات | تطوير الويب والأمن السيبراني</p>
+          <p class="hero__description" data-i18n="hero.bio">
+            أبني تطبيقات ويب متكاملة تجمع بين واجهات المستخدم السلسة، وقواعد البيانات المحكمة، ومعايير الحماية والأمان.
+          </p>
+          <div class="hero__buttons">
+            <a href="#projects" class="btn btn--primary" data-i18n="hero.cta_projects">استعراض أعمالي</a>
+            <a href="#contact" class="btn btn--outline" data-i18n="hero.cta_contact">تواصل معي</a>
+          </div>
+        </div>
+
+        <div class="hero__image-wrapper">
+          <img src="assets/images/profile-placeholder.png" alt="صورة شخصية لعبدالرحمن" class="hero__image" width="320" height="320">
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section section--subtle" id="about">
+      <div class="container">
+        <h2 class="section__title" data-i18n="about.title">نبذة عني</h2>
+        <div class="about__grid">
+          <div class="about__text">
+            <p data-i18n="about.p1">
+              طالب ومطور مهتم بهندسة البرمجيات وبناء الحلول التقنية العملية. أركز على فهم الأساسيات من الجذور بدءاً من تصميم واجهات الويب المتجاوبة، مروراً بهيكلة قواعد البيانات، وصولاً إلى تأمين التطبيقات ضد الثغرات.
+            </p>
+            <p data-i18n="about.p2">
+              أسعى دائماً لتحويل الأفكار إلى منتجات رقمية قابلة للاستخدام الفعلي وتقدم قيمة حقيقية للمستخدمين.
+            </p>
+            <a href="assets/cv.pdf" download class="btn btn--primary" data-i18n="about.download_cv">تحميل السيرة الذاتية (PDF)</a>
+          </div>
+
+          <div class="about__stats">
+            <div class="stat-card">
+              <span class="stat-card__number">+10</span>
+              <span class="stat-card__label" data-i18n="about.stat_projects">مشاريع تطبيقية</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card__number">+4</span>
+              <span class="stat-card__label" data-i18n="about.stat_domains">مسارات تقنية</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card__number">+6</span>
+              <span class="stat-card__label" data-i18n="about.stat_certs">شهادات وتدريبات</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills section" id="skills">
+      <div class="container">
+        <h2 class="section__title" data-i18n="skills.title">المهارات التقنية</h2>
+        <div class="skills__grid">
+          <article class="skill-card">
+            <h3 class="skill-card__title" data-i18n="skills.frontend">تطوير الواجهات (Frontend)</h3>
+            <ul class="skill-card__list">
+              <li>HTML5 & Semantic Web</li>
+              <li>CSS3 (Flexbox, Grid, Variables)</li>
+              <li>JavaScript (ES6+)</li>
+              <li>Responsive & RTL Design</li>
+            </ul>
+          </article>
+
+          <article class="skill-card">
+            <h3 class="skill-card__title" data-i18n="skills.backend">الخلفية وقواعد البيانات (Backend & DB)</h3>
+            <ul class="skill-card__list">
+              <li>SQL & Relational Databases</li>
+              <li>Oracle Database & APEX</li>
+              <li>RESTful APIs Basics</li>
+              <li>Node.js & Express (Planned)</li>
+            </ul>
+          </article>
+
+          <article class="skill-card">
+            <h3 class="skill-card__title" data-i18n="skills.security">الأمن السيبراني (Cybersecurity)</h3>
+            <ul class="skill-card__list">
+              <li>Web Application Security</li>
+              <li>OWASP Top 10 (SQLi, XSS, CSRF)</li>
+              <li>Malware Analysis Basics</li>
+              <li>Linux & Network Fundamentals</li>
+            </ul>
+          </article>
+
+          <article class="skill-card">
+            <h3 class="skill-card__title" data-i18n="skills.tools">الأدوات وبيئات العمل (Tools)</h3>
+            <ul class="skill-card__list">
+              <li>Git & GitHub</li>
+              <li>VS Code</li>
+              <li>Chrome DevTools</li>
+              <li>Postman</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects section section--subtle" id="projects">
+      <div class="container">
+        <h2 class="section__title" data-i18n="projects.title">المشاريع والأعمال</h2>
+
+        <div class="projects__filters" role="group" aria-label="Filter projects by category">
+          <button type="button" class="filter-btn active" data-filter="all" data-i18n="projects.filter_all">الكل</button>
+          <button type="button" class="filter-btn" data-filter="frontend">Frontend</button>
+          <button type="button" class="filter-btn" data-filter="backend">Backend & DB</button>
+          <button type="button" class="filter-btn" data-filter="security">Cybersecurity</button>
+        </div>
+
+        <div class="projects__grid" id="projects-grid">
+          <article class="project-card" data-category="frontend">
+            <div class="project-card__body">
+              <span class="project-card__tag">Frontend</span>
+              <h3 class="project-card__title">موقع البورتفوليو الشخصي</h3>
+              <p class="project-card__desc">موقع تعريفي متجاوب بالكامل يدعم اللغتين العربية والإنجليزية والوضع الليلي مع فلترة ديناميكية للمشاريع.</p>
+              <div class="project-card__tech">
+                <span>HTML5</span>
+                <span>CSS3</span>
+                <span>JavaScript</span>
+              </div>
+              <div class="project-card__links">
+                <a href="#" target="_blank" rel="noopener noreferrer">معاينة حية ↗</a>
+                <a href="https://github.com/Abdulrhman403/portfolio" target="_blank" rel="noopener noreferrer">الكود (GitHub)</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="backend">
+            <div class="project-card__body">
+              <span class="project-card__tag">Backend & DB</span>
+              <h3 class="project-card__title">نظام إدارة بيانات تجريبي</h3>
+              <p class="project-card__desc">تصميم مخطط قاعدة بيانات علائقية متكاملة لإدارة العمليات والتقارير مع استعلامات محسّنة.</p>
+              <div class="project-card__tech">
+                <span>SQL</span>
+                <span>Oracle</span>
+                <span>ERD</span>
+              </div>
+              <div class="project-card__links">
+                <a href="#" target="_blank" rel="noopener noreferrer">تفاصيل المشروع ↗</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">الكود (GitHub)</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="security">
+            <div class="project-card__body">
+              <span class="project-card__tag">Cybersecurity</span>
+              <h3 class="project-card__title">تقرير فحص وتأمين تطبيق ويب</h3>
+              <p class="project-card__desc">تحليل ثغرات تطبيقات الويب الشائعة وتطبيق حلول الحماية ضد هجمات الحقن وتزوير الطلبات.</p>
+              <div class="project-card__tech">
+                <span>OWASP</span>
+                <span>Web Security</span>
+                <span>Linux</span>
+              </div>
+              <div class="project-card__links">
+                <a href="#" target="_blank" rel="noopener noreferrer">قراءة الملخص ↗</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">المستودع</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience section" id="experience">
+      <div class="container">
+        <h2 class="section__title" data-i18n="experience.title">الخبرات والشهادات</h2>
+        <div class="timeline">
+          <div class="timeline__item">
+            <span class="timeline__date">2026</span>
+            <h3 class="timeline__title">متدرب قواعد بيانات وأمن تطبيقات</h3>
+            <p class="timeline__org">شركة تقنية (بيانات تجريبية)</p>
+            <p class="timeline__desc">المساهمة في تصميم جداول قواعد البيانات وتحسين أمان المنصات الإلكترونية.</p>
+          </div>
+
+          <div class="timeline__item">
+            <span class="timeline__date">2026</span>
+            <h3 class="timeline__title">برنامج تدريبي مكثف في الأمن السيبراني</h3>
+            <p class="timeline__org">أكاديمية تقنية متخصصة</p>
+            <p class="timeline__desc">إتمام مختبرات عملية في أمن تطبيقات الويب، تحليل البرمجيات، واكتشاف التهديدات.</p>
+          </div>
+
+          <div class="timeline__item">
+            <span class="timeline__date">2025 - مستمر</span>
+            <h3 class="timeline__title">بكالوريوس نظم المعلومات</h3>
+            <p class="timeline__org">الجامعة</p>
+            <p class="timeline__desc">دراسة هندسة النظم، قواعد البيانات، الشبكات، وتطوير التطبيقات.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact section section--subtle" id="contact">
+      <div class="container">
+        <h2 class="section__title" data-i18n="contact.title">تواصل معي</h2>
+        <div class="contact__grid">
+          <div class="contact__info">
+            <p data-i18n="contact.subtitle">هل لديك مشروع، فرصة تدريبية، أو استفسار تقني؟ يسعدني تواصلك.</p>
+            <ul class="contact__links">
+              <li><strong>البريد الإلكتروني:</strong> <a href="mailto:example@email.com">example@email.com</a></li>
+              <li><strong>GitHub:</strong> <a href="https://github.com/Abdulrhman403" target="_blank" rel="noopener noreferrer">github.com/Abdulrhman403</a></li>
+              <li><strong>LinkedIn:</strong> <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">linkedin.com/in/username</a></li>
+            </ul>
+          </div>
+
+          <form class="contact__form" id="contact-form" novalidate>
+            <div class="form-group">
+              <label for="name" data-i18n="contact.label_name">الاسم الكامل</label>
+              <input type="text" id="name" name="name" required placeholder="أدخل اسمك">
+            </div>
+
+            <div class="form-group">
+              <label for="email" data-i18n="contact.label_email">البريد الإلكتروني</label>
+              <input type="email" id="email" name="email" required placeholder="name@example.com">
+            </div>
+
+            <div class="form-group">
+              <label for="message" data-i18n="contact.label_message">الرسالة</label>
+              <textarea id="message" name="message" rows="5" required placeholder="اكتب رسالتك هنا..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary" data-i18n="contact.submit">إرسال الرسالة</button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__container">
+      <p data-i18n="footer.rights">© 2026 عبدالرحمن. جميع الحقوق محفوظة.</p>
+      <a href="#hero" class="footer__top" data-i18n="footer.back_to_top">العودة للأعلى ↑</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
   <script src="js/theme.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
