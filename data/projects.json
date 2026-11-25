@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "Project One",
+    "description": "A short description of this project.",
+    "tags": ["HTML", "CSS", "JavaScript"],
+    "url": "#",
+    "image": "assets/images/project1.png"
+  },
+  {
+    "id": 2,
+    "title": "Project Two",
+    "description": "A short description of this project.",
+    "tags": ["React", "Node.js"],
+    "url": "#",
+    "image": "assets/images/project2.png"
+  }
+]

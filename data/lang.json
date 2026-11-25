@@ -1,0 +1,24 @@
+{
+  "en": {
+    "nav.home": "Home",
+    "nav.about": "About",
+    "nav.projects": "Projects",
+    "nav.contact": "Contact",
+    "hero.greeting": "Hi, I'm",
+    "hero.cta": "View My Work",
+    "about.title": "About Me",
+    "projects.title": "Projects",
+    "contact.title": "Contact"
+  },
+  "ar": {
+    "nav.home": "الرئيسية",
+    "nav.about": "عني",
+    "nav.projects": "المشاريع",
+    "nav.contact": "تواصل",
+    "hero.greeting": "مرحباً، أنا",
+    "hero.cta": "شاهد أعمالي",
+    "about.title": "عني",
+    "projects.title": "المشاريع",
+    "contact.title": "تواصل معي"
+  }
+}
