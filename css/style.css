@@ -302,12 +302,14 @@ body.journey-locked .header {
   background-color: #050505;
 }
 
-/* Transition gate from fixed overlay into permanent first hero screen */
+/* Keep gate full-screen overlay until onboarding completes */
 .gate.unlocked {
-  position: relative;
-  inset: auto;
-  z-index: 1;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   pointer-events: auto;
   background-color: #f1ede4;
   background-image:
@@ -644,6 +646,7 @@ body.journey-locked .header {
 
 .gate__headline .highlight {
   display: inline-block;
+  max-width: 100%;
   color: #e33e14;
   background-color: rgba(227, 62, 20, 0.08);
   border: 3px solid #1a1a0c;
@@ -651,6 +654,29 @@ body.journey-locked .header {
   margin-top: 0.75rem;
   transform: rotate(-1.5deg);
   box-shadow: 4px 4px 0px #1a1a0c;
+}
+
+@media (max-width: 640px) {
+  .gate__content {
+    width: 100%;
+    padding-inline: var(--space-md);
+  }
+
+  .gate__headline {
+    font-size: clamp(1.45rem, 6vw, 1.9rem);
+    margin-bottom: var(--space-lg);
+  }
+
+  .gate__headline .highlight {
+    font-size: 0.92em;
+    padding: 0.35rem 0.75rem;
+    transform: rotate(-0.8deg);
+  }
+
+  .gate__start-btn {
+    padding: 0.85rem 1.75rem;
+    font-size: var(--fs-base);
+  }
 }
 
 /* Press & Hold ink circular seal */
