@@ -10,6 +10,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--navbar-height);
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 html[dir="ltr"] {
@@ -24,6 +26,7 @@ body {
   background-color: var(--bg-main);
   transition: background-color var(--transition-normal), color var(--transition-normal);
   overflow-x: hidden;
+  max-width: 100%;
 }
 
 img {
@@ -139,6 +142,10 @@ textarea {
 /* Header & Navbar */
 /* Hide top navigation bar until the user starts the journey */
 body:not(.journey-started) .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-100%);
@@ -305,11 +312,14 @@ body.journey-locked .header {
 /* Keep gate full-screen overlay until onboarding completes */
 .gate.unlocked {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 2000;
-  width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
   pointer-events: auto;
   background-color: #f1ede4;
   background-image:
