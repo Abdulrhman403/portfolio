@@ -1,0 +1,648 @@
+/* ==========================================================================
+   Portfolio Enhancements
+   Tasks: 2 (Icons) · 3 (Skill Bars) · 4 (Avatar) · 5 (Project Headers) · 6 (Timeline)
+   ========================================================================== */
+
+/* ──────────────────────────────────────────
+   TASK 4 — About Avatar
+   ────────────────────────────────────────── */
+
+/* Override grid to 3 columns on desktop */
+.about__grid {
+  grid-template-columns: 160px 1.4fr 1fr;
+  align-items: start;
+}
+
+/* Avatar wrapper */
+.about__avatar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Rotating outer ring */
+.about__avatar-ring {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  padding: 4px;
+  background: conic-gradient(
+    var(--color-primary) 0deg,
+    var(--color-secondary) 120deg,
+    #a855f7 240deg,
+    var(--color-primary) 360deg
+  );
+  animation: avatarSpin 6s linear infinite;
+  flex-shrink: 0;
+}
+
+.about__avatar-ring::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--bg-main);
+}
+
+/* Inner circle with gradient */
+.about__avatar-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Initials */
+.about__avatar-initial {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-family: var(--font-ar);
+  line-height: 1;
+  user-select: none;
+}
+
+/* Floating tags below avatar */
+.about__avatar-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.about__avatar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.about__avatar-badge--dev {
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--color-primary);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+}
+
+.about__avatar-badge--sec {
+  background: rgba(15, 118, 110, 0.12);
+  color: var(--color-secondary);
+  border: 1px solid rgba(15, 118, 110, 0.3);
+}
+
+@keyframes avatarSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Stack on mobile */
+@media (max-width: 900px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+  }
+  .about__avatar-wrap {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .about__avatar-ring {
+    width: 90px;
+    height: 90px;
+  }
+  .about__avatar-initial {
+    font-size: 2rem;
+  }
+  .about__avatar-tags {
+    align-items: flex-start;
+  }
+}
+
+
+/* ──────────────────────────────────────────
+   TASK 2+3 — Skill Card Icons + Progress Bars
+   ────────────────────────────────────────── */
+
+/* Card header row: icon + title */
+.skill-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.skill-card__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.skill-card:hover .skill-card__icon {
+  background: var(--color-primary);
+  color: #fff;
+  transform: rotate(-6deg) scale(1.1);
+}
+
+/* Override existing title to remove bottom border (now in header) */
+.skill-card__title {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  font-size: var(--fs-base);
+}
+
+/* Each skill list item: stacked name + bar */
+.skill-card__list li {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.3rem;
+}
+
+/* Remove the old arrow pseudo — bar replaces it */
+.skill-card__list li::before {
+  content: none;
+}
+
+.skill-item__name {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.skill-item__name::before {
+  content: "▹";
+  color: var(--color-primary);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Progress bar track */
+.skill-item__bar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-color);
+  overflow: hidden;
+}
+
+/* Animated fill — starts at 0, animates to --skill-w on reveal */
+.skill-item__fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  width: 0%;
+  transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Trigger bar animation when parent card is revealed */
+.skill-card.is-revealed .skill-item__fill {
+  width: var(--skill-w, 70%);
+}
+
+/* Add staggered delay for each bar */
+.skill-card.is-revealed li:nth-child(1) .skill-item__fill { transition-delay: 0.1s; }
+.skill-card.is-revealed li:nth-child(2) .skill-item__fill { transition-delay: 0.25s; }
+.skill-card.is-revealed li:nth-child(3) .skill-item__fill { transition-delay: 0.40s; }
+.skill-card.is-revealed li:nth-child(4) .skill-item__fill { transition-delay: 0.55s; }
+
+
+/* ──────────────────────────────────────────
+   TASK 5 — Project Card Headers (Editor Style)
+   ────────────────────────────────────────── */
+
+/* Remove old ::before top-border (we're replacing it) */
+.project-card::before {
+  display: none;
+}
+
+/* New header zone */
+.project-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+/* Category colors */
+.project-card[data-category="frontend"] .project-card__header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+}
+.project-card[data-category="backend"] .project-card__header {
+  background: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
+}
+.project-card[data-category="security"] .project-card__header {
+  background: linear-gradient(135deg, #7f1d1d 0%, #ef4444 100%);
+}
+
+/* macOS-style window dots */
+.project-card__dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.project-card__dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+}
+
+.project-card__dots span:nth-child(1) { background: #ef4444; }
+.project-card__dots span:nth-child(2) { background: #f59e0b; }
+.project-card__dots span:nth-child(3) { background: #22c55e; }
+
+/* Category icon on the right */
+.project-card__header-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.9);
+  backdrop-filter: blur(4px);
+}
+
+.project-card__header-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Adjust tag to sit nicely after the new header */
+.project-card__tag {
+  margin-top: 0.25rem;
+}
+
+
+/* ──────────────────────────────────────────
+   TASK 6 — Timeline Visual Upgrade
+   ────────────────────────────────────────── */
+
+/* Left border stripe color by type */
+.timeline__item {
+  border-inline-start: 4px solid var(--timeline-accent, var(--color-primary));
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline__item:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.timeline__item[data-type="work"]  { --timeline-accent: #2563eb; }
+.timeline__item[data-type="security"] { --timeline-accent: #ef4444; }
+.timeline__item[data-type="cert"]  { --timeline-accent: #f59e0b; }
+
+/* Icon badge that sits on the timeline line */
+.timeline__icon-badge {
+  position: absolute;
+  top: 1rem;
+  inset-inline-start: calc(-1 * var(--space-lg) - 20px);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--timeline-accent, var(--color-primary));
+  border: 2px solid var(--bg-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Override old ::before dot (replaced by icon badge) */
+.timeline__item::before {
+  display: none;
+}
+
+/* Type badge on date */
+.timeline__type-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--timeline-accent, var(--color-primary));
+  border: 1px solid currentColor;
+  margin-bottom: 0.4rem;
+}
+
+
+/* ──────────────────────────────────────────
+   TASK 2 — Contact Section Icons
+   ────────────────────────────────────────── */
+
+.contact__links li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contact__link-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact__link-icon:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.contact__link-icon--email   { background: #2563eb; }
+.contact__link-icon--github  { background: #1a1a1a; }
+.contact__link-icon--linkedin { background: #0a66c2; }
+
+[data-theme="dark"] .contact__link-icon--github { background: #374151; }
+
+.contact__link-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact__link-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  line-height: 1.4;
+}
+
+.contact__link-text strong {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.contact__link-text a {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* ──────────────────────────────────────────
+   Intro Hero (Post-Gate Main Interface)
+   ────────────────────────────────────────── */
+
+.intro-hero {
+  min-height: calc(100vh - var(--navbar-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding-block: var(--space-2xl);
+  background:
+    radial-gradient(circle at 50% 25%, rgba(37, 99, 235, 0.08) 0%, transparent 55%),
+    var(--bg-main);
+}
+
+[data-theme="dark"] .intro-hero {
+  background:
+    radial-gradient(circle at 50% 25%, rgba(59, 130, 246, 0.14) 0%, transparent 55%),
+    var(--bg-main);
+}
+
+.intro-hero__container {
+  max-width: 780px;
+}
+
+.intro-hero__name {
+  font-size: clamp(2.1rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-md);
+  line-height: 1.25;
+}
+
+.intro-hero__quote {
+  font-size: clamp(1.08rem, 2.2vw, 1.3rem);
+  line-height: 1.95;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin-inline: auto;
+  margin-bottom: var(--space-xl);
+}
+
+.intro-hero__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.intro-hero__btn {
+  padding: 0.95rem 2.25rem;
+  font-size: var(--fs-lg);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-md);
+}
+
+/* ──────────────────────────────────────────
+   Interactive Sequential Philosophy Section
+   ────────────────────────────────────────── */
+
+.philosophy__shell {
+  max-width: 780px;
+  margin-inline: auto;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.philosophy__progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.philosophy__steps {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.philosophy__step-dot {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  background: var(--bg-main);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.philosophy__step-dot:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.philosophy__step-dot.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+  transform: scale(1.08);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16);
+}
+
+.philosophy__step-dot.done {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+.philosophy__step-line {
+  width: 32px;
+  height: 2px;
+  background-color: var(--border-color);
+}
+
+.philosophy__counter {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.philosophy__slides {
+  min-height: 240px;
+}
+
+.philosophy__slide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  animation: philFadeIn 0.35s ease forwards;
+}
+
+.philosophy__slide[hidden] {
+  display: none !important;
+}
+
+.philosophy__tag {
+  align-self: flex-start;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--color-primary);
+}
+
+.philosophy__heading {
+  font-size: clamp(1.3rem, 2.8vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text-main);
+}
+
+.philosophy__text {
+  font-size: var(--fs-base);
+  line-height: 1.95;
+  color: var(--text-muted);
+}
+
+.philosophy__cta-box {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.philosophy__cta-text {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.philosophy__whatsapp-btn {
+  background-color: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+  border-radius: var(--radius-full);
+  padding: 0.75rem 1.5rem;
+}
+
+.philosophy__whatsapp-btn:hover {
+  background-color: #15803d;
+  border-color: #15803d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.28);
+}
+
+.philosophy__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-color);
+}
+
+.philosophy__nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes philFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .philosophy__shell {
+    padding: var(--space-md);
+  }
+  .philosophy__step-line {
+    width: 16px;
+  }
+}
+

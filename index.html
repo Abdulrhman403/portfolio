@@ -28,17 +28,19 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/enhancements.css">
 </head>
-<body>
-
+<body class="journey-locked">
   <!-- Header & Navbar -->
   <header class="header" id="header">
     <nav class="nav container" aria-label="Main Navigation">
-      <a href="#hero" class="nav__logo">
+      <a href="#intro-hero" class="nav__logo">
         <span data-i18n="nav.logo">عبدالرحمن</span><span class="dot">.</span>
       </a>
 
       <ul class="nav__menu" id="nav-menu">
+        <li><a href="#philosophy" class="nav__link" data-i18n="nav.philosophy">فلسفتي</a></li>
         <li><a href="#about" class="nav__link" data-i18n="nav.about">نبذة عني</a></li>
         <li><a href="#skills" class="nav__link" data-i18n="nav.skills">المهارات</a></li>
         <li><a href="#projects" class="nav__link" data-i18n="nav.projects">المشاريع</a></li>
@@ -55,24 +57,283 @@
   </header>
 
   <main>
-    <!-- Hero Section -->
-    <section class="hero section" id="hero">
-      <div class="container hero__container">
-        <div class="hero__content">
-          <span class="hero__badge" data-i18n="hero.greeting">أهلاً بك في مساحتي الرقمية 👋</span>
-          <h1 class="hero__title" data-i18n="hero.name">عبدالرحمن محمد</h1>
-          <p class="hero__subtitle" data-i18n="hero.role">مطور نظم معلومات | تطوير الويب والأمن السيبراني</p>
-          <p class="hero__description" data-i18n="hero.bio">
-            أبني تطبيقات ويب متكاملة تجمع بين واجهات المستخدم السلسة، وقواعد البيانات المحكمة، ومعايير الحماية والأمان.
-          </p>
-          <div class="hero__buttons">
-            <a href="#projects" class="btn btn--primary" data-i18n="hero.cta_projects">استعراض أعمالي</a>
-            <a href="#contact" class="btn btn--outline" data-i18n="hero.cta_contact">تواصل معي</a>
+<!-- Interactive Cinema Curtain & Drag Flashlight Gate -->
+    <section class="gate" id="hero" aria-label="Interactive Intro Gate">
+      <!-- Split panels that open when unlocking the portfolio -->
+      <div class="gate__panel gate__panel--top"></div>
+      <div class="gate__panel gate__panel--bottom"></div>
+
+     <!-- Rich velvet cinema curtains & interactive pull cord -->
+      <div class="gate__curtain gate__curtain--left" id="curtain-left" aria-hidden="true"></div>
+      <div class="gate__curtain gate__curtain--right" id="curtain-right" aria-hidden="true"></div>
+
+      <div class="gate__rope-wrapper" id="curtain-rope" role="slider" aria-label="Pull cord to open curtains" tabindex="0">
+        <div class="gate__rope-line"></div>
+        <div class="gate__rope-tassel">
+          <span class="gate__rope-ring"></span>
+        </div>
+      </div>
+      <!-- Hidden paper/ink content revealed only by flashlight -->
+      <div class="gate__content" id="gate-content">
+        <p class="gate__hint" data-i18n="gate.hint">اسحب الكشاف في الظلام...</p>
+        <h1 class="gate__headline" data-i18n="gate.headline">
+          الناس يتشابهون... <span class="highlight">ودّك تتعرف على شخص مختلف؟</span>
+        </h1>
+
+        <div class="gate__hold-wrapper">
+          <button type="button" class="gate__hold-btn" id="gate-hold-btn" aria-label="Hold to Enter">
+            <svg class="gate__ring" viewBox="0 0 120 120">
+              <circle class="gate__ring-bg" cx="60" cy="60" r="54"></circle>
+              <circle class="gate__ring-progress" id="gate-progress" cx="60" cy="60" r="54"></circle>
+            </svg>
+            <span class="gate__hold-text" id="gate-hold-text" data-i18n="gate.hold">اضغط مطولاً</span>
+          </button>
+         <button type="button" class="gate__start-btn" id="gate-start-btn" hidden>
+            <span data-i18n="gate.start">جاهز نبدأ الرحلة؟</span>
+            <span class="gate__rocket" aria-hidden="true">🚀</span>
+          </button>
+        </div>
+      </div>
+<!-- Interactive 3-Step Onboarding Ritual Modal -->
+        <div class="onboard" id="onboarding-modal" hidden>
+          <div class="onboard__card" id="onboard-card">
+            <!-- 3-Level Progress Bar -->
+            <div class="onboard__progress" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
+              <div class="onboard__step active" data-step-indicator="1">
+                <span class="onboard__step-num">01</span>
+                <span class="onboard__step-label" data-i18n="onboard.step1.tab">شحذ الخيال</span>
+              </div>
+              <div class="onboard__step" data-step-indicator="2">
+                <span class="onboard__step-num">02</span>
+                <span class="onboard__step-label" data-i18n="onboard.step2.tab">بوصلة الإبداع</span>
+              </div>
+              <div class="onboard__step" data-step-indicator="3">
+                <span class="onboard__step-num">03</span>
+                <span class="onboard__step-label" data-i18n="onboard.step3.tab">ميثاق الإنجاز</span>
+              </div>
+            </div>
+
+            <!-- STEP 1A: Intro Prompt -->
+            <div class="onboard__pane active" id="onboard-step-1a">
+              <span class="onboard__badge" data-i18n="onboard.first.badge">أولاً</span>
+              <h2 class="onboard__title" data-i18n="onboard.first.title">كسر الجمود</h2>
+              <p class="onboard__desc" data-i18n="onboard.first.desc">
+                قبل ما نتعرف على بعض أكثر، أحتاجك تفصل عن جو التعارف الرسمي المعتاد وتبحر معي بخيالك شوي... تقدر؟
+              </p>
+              <button type="button" class="onboard__btn onboard__btn--hype" id="onboard-yes-btn" data-i18n="onboard.first.btn">
+                أكييييد!! 🚀
+              </button>
+            </div>
+
+            <!-- STEP 1B: Quick Brain Warmup Game -->
+            <div class="onboard__pane" id="onboard-step-1b" hidden>
+              <p class="onboard__science" data-i18n="onboard.game.science">
+                تشير الدراسات الإدراكية إلى أن تنشيط الذهن بلعبة سريعة لمدة 5 ثوانٍ يرفع مرونة الخيال والربط الإبداعي بنسبة تصل إلى 40%.
+              </p>
+              <div class="onboard__alert" data-i18n="onboard.game.alert">
+                ⚠️ ملاحظة: نحتاجك مصحصح زييين!
+              </div>
+              <p class="onboard__game-prompt" id="game-prompt" data-i18n="onboard.game.prompt">
+                احفظ ترتيب الرموز الثلاثة ثم اضغطها بنفس التسلسل:
+              </p>
+
+              <!-- Sequence Display & Interactive Tiles -->
+              <div class="onboard__sequence" id="game-sequence" aria-live="polite"></div>
+              <div class="onboard__tiles" id="game-tiles">
+                <button type="button" class="onboard__tile" data-symbol="💡">💡</button>
+                <button type="button" class="onboard__tile" data-symbol="⚙️">⚙️</button>
+                <button type="button" class="onboard__tile" data-symbol="🛡️">🛡️</button>
+                <button type="button" class="onboard__tile" data-symbol="🚀">🚀</button>
+              </div>
+
+              <!-- Celebration Banner on Win -->
+              <div class="onboard__win" id="game-win-box" hidden>
+                <div class="onboard__win-stamp" data-i18n="onboard.game.win">كفووو عليك! 🔥</div>
+                <button type="button" class="onboard__btn" id="to-step-2-btn" data-i18n="onboard.game.next">
+                  نكمل لـ (ثانياً) ←
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 2: Color Psychology & Personal Title -->
+            <div class="onboard__pane" id="onboard-step-2" hidden>
+              <span class="onboard__badge" data-i18n="onboard.second.badge">ثانياً</span>
+              <h2 class="onboard__title" data-i18n="onboard.second.title">اختر ترددك الإبداعي</h2>
+              <p class="onboard__desc" data-i18n="onboard.second.desc">
+                بحسب علم نفس الألوان، كل لون يحفّز مساراً مختلفاً في الخيال. اختر اللون اللي يشدّك الحين عشان نضبط جو الرحلة على موجتك:
+              </p>
+
+              <div class="onboard__colors" id="color-choices">
+                <button type="button" class="onboard__color-btn" data-color="#e33e14" data-key="orange">
+                  <span class="onboard__swatch" style="background:#e33e14;"></span>
+                  <span data-i18n="onboard.color.orange.name">البرتقالي الناري</span>
+                </button>
+                <button type="button" class="onboard__color-btn" data-color="#1d4ed8" data-key="blue">
+                  <span class="onboard__swatch" style="background:#1d4ed8;"></span>
+                  <span data-i18n="onboard.color.blue.name">الأزرق العميق</span>
+                </button>
+                <button type="button" class="onboard__color-btn" data-color="#15803d" data-key="green">
+                  <span class="onboard__swatch" style="background:#15803d;"></span>
+                  <span data-i18n="onboard.color.green.name">الأخضر الزمردي</span>
+                </button>
+                <button type="button" class="onboard__color-btn" data-color="#b45309" data-key="gold">
+                  <span class="onboard__swatch" style="background:#b45309;"></span>
+                  <span data-i18n="onboard.color.gold.name">الذهبي الدافئ</span>
+                </button>
+              </div>
+
+             <!-- Trigger button that appears right after picking a color -->
+              <div class="onboard__color-action" id="color-action-box" hidden>
+                <button type="button" class="onboard__btn" id="reveal-frequency-btn" data-i18n="onboard.second.revealBtn">
+                 عرّفني على مساري  ✨
+                </button>
+              </div>
+            </div>
+
+            <!-- STEP 2B: Frequency Profile & Imagination Tip -->
+            <div class="onboard__pane" id="onboard-step-2b" hidden>
+              <span class="onboard__badge" id="freq-badge">مسارك الإبداعي</span>
+              <h2 class="onboard__title" id="freq-title">لقبك الإبداعي</h2>
+              <p class="onboard__desc" id="freq-bio"></p>
+              <div class="onboard__tip-card">
+                <strong class="onboard__tip-heading" data-i18n="onboard.second.tipLabel">💡 نصيحة لرفع خيالك:</strong>
+                <p class="onboard__tip-body" id="freq-advice"></p>
+              </div>
+              <button type="button" class="onboard__btn" id="to-step-3-btn" data-i18n="onboard.second.next">
+                جاهز لـ (ثالثاً) ←
+              </button>
+            </div>
+
+            <!-- STEP 3: Success Definition & Grand Finale -->
+            <div class="onboard__pane" id="onboard-step-3" hidden>
+              <span class="onboard__badge" data-i18n="onboard.third.badge">ثالثاً</span>
+              <h2 class="onboard__title" id="step-3-greeting">بصمتك الخاصة</h2>
+              <label for="success-definition-input" class="onboard__desc" data-i18n="onboard.third.question">
+                وش تعريفك الشخصي للنجاح أو الإنجاز؟
+              </label>
+              <textarea
+                id="success-definition-input"
+                class="onboard__textarea"
+                rows="3"
+                data-i18n-placeholder="onboard.third.placeholder"
+                placeholder="اكتب تعريفك بكلماتك البسيطة..."
+              ></textarea>
+              <button type="button" class="onboard__btn" id="finish-onboard-btn" disabled data-i18n="onboard.third.btn">
+                اعتمد إجابتي وانطلق 🚀
+              </button>
+            </div>
           </div>
         </div>
+      <!-- Total darkness overlay with flashlight cutout -->
+      <div class="gate__darkness" id="gate-spotlight" aria-hidden="true"></div>
 
-        <div class="hero__image-wrapper">
-          <img src="assets/images/profile-placeholder.png" alt="صورة شخصية لعبدالرحمن" class="hero__image" width="320" height="320">
+      <!-- Draggable flashlight handle -->
+      <div class="gate__torch" id="gate-torch" role="slider" aria-label="Drag flashlight" tabindex="0">
+        <span class="gate__torch-dot"></span>
+      </div>
+
+      <button type="button" class="gate__skip" id="skip-journey-btn" data-i18n="gate.skip">تخطي</button>
+    </section>
+
+    <!-- Main Intro Hero (Post-Gate) -->
+    <section class="intro-hero section" id="intro-hero" aria-label="Introduction">
+      <div class="container intro-hero__container">
+        <div class="intro-hero__content" data-reveal="up">
+          <h1 class="intro-hero__name" data-i18n="intro.name">عبدالرحمن محمد المقيط</h1>
+          <p class="intro-hero__quote" data-i18n="intro.quote">
+            محاولة فهم نفسك هي أعظم الحروب وأنبلها؛ ففيها تُكتشف المساحات التي لم يطأها غيرك، وتُهذَّب الفوضى لتصير وضوحاً. وحين تنتصر على ضجيجك الداخلي، لا يعود شيء في الخارج قادراً على هزيمتك.
+          </p>
+          <div class="intro-hero__actions">
+            <a href="#philosophy" class="btn btn--primary intro-hero__btn" id="to-philosophy-btn" data-i18n="intro.philosophy_btn">
+              فلسفتي في الحياة
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Sequential Philosophy Section -->
+    <section class="philosophy section" id="philosophy" aria-label="My Life Philosophy">
+      <div class="container">
+        <h2 class="section__title" data-reveal="up" data-i18n="philosophy.title">فلسفتي في الحياة</h2>
+
+        <div class="philosophy__shell" data-reveal="zoom" data-delay="150">
+          <!-- Progress Header -->
+          <div class="philosophy__progress">
+            <div class="philosophy__steps" role="tablist" aria-label="Philosophy Pages">
+              <button type="button" class="philosophy__step-dot active" data-phil-step="0" role="tab" aria-selected="true">01</button>
+              <span class="philosophy__step-line" aria-hidden="true"></span>
+              <button type="button" class="philosophy__step-dot" data-phil-step="1" role="tab" aria-selected="false">02</button>
+              <span class="philosophy__step-line" aria-hidden="true"></span>
+              <button type="button" class="philosophy__step-dot" data-phil-step="2" role="tab" aria-selected="false">03</button>
+            </div>
+            <span class="philosophy__counter" id="phil-counter">01 / 03</span>
+          </div>
+
+          <!-- Sequential Pages -->
+          <div class="philosophy__slides">
+            <!-- Page 1 -->
+            <article class="philosophy__slide active" data-phil-slide="0" role="tabpanel">
+              <span class="philosophy__tag" data-i18n="philosophy.p1.tag">الفلسفة الأولى</span>
+              <h3 class="philosophy__heading" data-i18n="philosophy.p1.title">
+                إن إيجاد الحل لا يمكن أن يبدأ إلا منك، ولا أحد يستطيع حل مشكلتك غيرك
+              </h3>
+              <p class="philosophy__text" data-i18n="philosophy.p1.body">
+                قد ننتظر طويلاً يداً تمتد من الخارج لتصلح ما انكسر في داخلنا، أو ظروفاً تتبدل من تلقاء نفسها؛ لكن الحقيقة أن كل تغيير حقيقي يبدأ من اللحظة التي تتحمل فيها مسؤولية واقعك. الآخرون قد يضيئون لك الطريق، أما الخطوة الأولى والقرار الشجاع فهما ملكك وحدك.
+              </p>
+            </article>
+
+            <!-- Page 2 -->
+            <article class="philosophy__slide" data-phil-slide="1" role="tabpanel" hidden>
+              <span class="philosophy__tag" data-i18n="philosophy.p2.tag">الفلسفة الثانية</span>
+              <h3 class="philosophy__heading" data-i18n="philosophy.p2.title">
+                الصلابة الذهنية وتطوير العقل يجب أن يُلقَّن مع تعليم اللغة!
+              </h3>
+              <p class="philosophy__text" data-i18n="philosophy.p2.body">
+                نتعلم منذ الصغر كيف ننطق الكلمات ونركب الجمل، لكننا نادراً ما نتعلم كيف ندير عقولنا أمام الضغوط والأفكار العابرة. تماماً كما نحتاج اللغة لنتواصل مع العالم، نحتاج الصلابة الذهنية لنصمد أمام تقلباته، ونُدرّب عقولنا على التمييز بين ما يستحق التوقف وما يجب تجاوزه.
+              </p>
+            </article>
+
+            <!-- Page 3 (Final: Difference & Discussion + WhatsApp CTA) -->
+            <article class="philosophy__slide" data-phil-slide="2" role="tabpanel" hidden>
+              <span class="philosophy__tag" data-i18n="philosophy.p3.tag">الفلسفة الثالثة</span>
+              <h3 class="philosophy__heading" data-i18n="philosophy.p3.title">
+                الاختلاف والنقاش
+              </h3>
+              <p class="philosophy__text" data-i18n="philosophy.p3.body">
+                الاختلاف بين الناس ليس عيباً يجب إخفاؤه، بل هو الدليل الأصدق على أن كل عقل يرى الحياة من زاويته الخاصة. النقاش الواعي لا يهدف إلى أن ينتصر أحدنا على الآخر، بل إلى أن نخرج معاً برؤية أوسع مما دخلنا به؛ نحترم الفكرة دون أن نقدّسها، ونصغي بصدق قبل أن نرد.
+              </p>
+
+              <!-- WhatsApp Discussion Callout -->
+              <div class="philosophy__cta-box">
+                <p class="philosophy__cta-text" data-i18n="philosophy.whatsapp_prompt">
+                  هل استوقفتك إحدى هذه الفلسفات، أو لك رأي مختلف تحب أن نتناقش فيه؟
+                </p>
+                <a
+                  href="https://wa.me/966547189427"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn philosophy__whatsapp-btn"
+                  id="philosophy-whatsapp-btn"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12.031 2c-5.516 0-9.969 4.453-9.969 9.969 0 1.766.469 3.484 1.344 5l-1.406 5.156 5.281-1.375c1.469.797 3.109 1.219 4.75 1.219 5.516 0 9.969-4.453 9.969-9.969S17.547 2 12.031 2zm5.813 14.125c-.25.703-1.438 1.344-2 1.422-.516.078-1.172.109-1.891-.125-.438-.141-1-.328-1.719-.641-3.016-1.297-4.984-4.344-5.141-4.547-.141-.203-1.219-1.625-1.219-3.109s.766-2.203 1.047-2.5c.266-.297.594-.375.797-.375h.578c.188 0 .438-.078.688.516.25.609.859 2.094.938 2.25.078.156.125.344.016.547-.109.203-.156.344-.313.516-.156.172-.328.391-.469.531-.156.156-.313.328-.141.641.188.313.813 1.344 1.75 2.172 1.203 1.078 2.219 1.406 2.531 1.563.313.156.5.125.688-.078.188-.219.797-.938 1.016-1.25.219-.313.422-.266.719-.156.297.109 1.875.891 2.203 1.047.313.156.531.234.609.375.078.141.078.797-.172 1.5z"/>
+                  </svg>
+                  <span data-i18n="philosophy.whatsapp_btn">ناقشني على واتساب</span>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Navigation Controls -->
+          <div class="philosophy__controls">
+            <button type="button" class="btn btn--outline philosophy__nav-btn" id="phil-prev-btn" disabled data-i18n="philosophy.prev">
+              → السابق
+            </button>
+            <button type="button" class="btn btn--primary philosophy__nav-btn" id="phil-next-btn" data-i18n="philosophy.next">
+              التالي ←
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -80,9 +341,28 @@
     <!-- About Section -->
     <section class="about section section--subtle" id="about">
       <div class="container">
-        <h2 class="section__title" data-i18n="about.title">نبذة عني</h2>
+        <h2 class="section__title" data-reveal="up" data-i18n="about.title">نبذة عني</h2>
         <div class="about__grid">
-          <div class="about__text">
+          <!-- Task 4: Avatar -->
+          <div class="about__avatar-wrap" data-reveal="zoom" data-delay="100">
+            <div class="about__avatar-ring">
+              <div class="about__avatar-inner">
+                <span class="about__avatar-initial">ع</span>
+              </div>
+            </div>
+            <div class="about__avatar-tags">
+              <span class="about__avatar-badge about__avatar-badge--dev">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                Developer
+              </span>
+              <span class="about__avatar-badge about__avatar-badge--sec">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Security
+              </span>
+            </div>
+          </div>
+
+          <div class="about__text" data-reveal="right" data-delay="150">
             <p data-i18n="about.p1">
               طالب ومطور مهتم بهندسة البرمجيات وبناء الحلول التقنية العملية. أركز على فهم الأساسيات من الجذور بدءاً من تصميم واجهات الويب المتجاوبة، مروراً بهيكلة قواعد البيانات، وصولاً إلى تأمين التطبيقات ضد الثغرات.
             </p>
@@ -92,16 +372,16 @@
             <a href="assets/cv.pdf" download class="btn btn--primary" data-i18n="about.download_cv">تحميل السيرة الذاتية (PDF)</a>
           </div>
 
-          <div class="about__stats">
-            <div class="stat-card">
+          <div class="about__stats stagger-group">
+            <div class="stat-card" data-reveal="zoom" data-delay="200">
               <span class="stat-card__number">+10</span>
               <span class="stat-card__label" data-i18n="about.stat_projects">مشاريع تطبيقية</span>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" data-reveal="zoom" data-delay="350">
               <span class="stat-card__number">+4</span>
               <span class="stat-card__label" data-i18n="about.stat_domains">مسارات تقنية</span>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" data-reveal="zoom" data-delay="500">
               <span class="stat-card__number">+6</span>
               <span class="stat-card__label" data-i18n="about.stat_certs">شهادات وتدريبات</span>
             </div>
@@ -110,60 +390,130 @@
       </div>
     </section>
 
-    <!-- Skills Section -->
-    <section class="skills section" id="skills">
-      <div class="container">
-        <h2 class="section__title" data-i18n="skills.title">المهارات التقنية</h2>
-        <div class="skills__grid">
-          <article class="skill-card">
-            <h3 class="skill-card__title" data-i18n="skills.frontend">تطوير الواجهات (Frontend)</h3>
-            <ul class="skill-card__list">
-              <li>HTML5 & Semantic Web</li>
-              <li>CSS3 (Flexbox, Grid, Variables)</li>
-              <li>JavaScript (ES6+)</li>
-              <li>Responsive & RTL Design</li>
-            </ul>
-          </article>
-
-          <article class="skill-card">
-            <h3 class="skill-card__title" data-i18n="skills.backend">الخلفية وقواعد البيانات (Backend & DB)</h3>
-            <ul class="skill-card__list">
-              <li>SQL & Relational Databases</li>
-              <li>Oracle Database & APEX</li>
-              <li>RESTful APIs Basics</li>
-              <li>Node.js & Express (Planned)</li>
-            </ul>
-          </article>
-
-          <article class="skill-card">
-            <h3 class="skill-card__title" data-i18n="skills.security">الأمن السيبراني (Cybersecurity)</h3>
-            <ul class="skill-card__list">
-              <li>Web Application Security</li>
-              <li>OWASP Top 10 (SQLi, XSS, CSRF)</li>
-              <li>Malware Analysis Basics</li>
-              <li>Linux & Network Fundamentals</li>
-            </ul>
-          </article>
-
-          <article class="skill-card">
-            <h3 class="skill-card__title" data-i18n="skills.tools">الأدوات وبيئات العمل (Tools)</h3>
-            <ul class="skill-card__list">
-              <li>Git & GitHub</li>
-              <li>VS Code</li>
-              <li>Chrome DevTools</li>
-              <li>Postman</li>
-            </ul>
-          </article>
+   <!-- Skills Section -->
+<section class="skills section" id="skills">
+  <div class="container">
+    <h2 class="section__title" data-reveal="up" data-i18n="skills.title">المهارات التقنية</h2>
+    <div class="skills__grid">
+      <article class="skill-card" data-reveal="flip" data-delay="100">
+        <!-- Task 2: Icon header -->
+        <div class="skill-card__header">
+          <span class="skill-card__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </span>
+          <h3 class="skill-card__title" data-i18n="skills.frontend">تطوير الويب (Web)</h3>
         </div>
-      </div>
-    </section>
+        <!-- Task 3: Progress bars -->
+        <ul class="skill-card__list">
+          <li>
+            <span class="skill-item__name">HTML5 &amp; Semantic Markup</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:90%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">CSS3 &amp; Responsive Layouts</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:85%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">Web Application Security Mindset</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:75%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">Input Validation &amp; Access Controls</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:70%"></div></div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="skill-card" data-reveal="flip" data-delay="250">
+        <div class="skill-card__header">
+          <span class="skill-card__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </span>
+          <h3 class="skill-card__title" data-i18n="skills.backend">قواعد البيانات (Databases)</h3>
+        </div>
+        <ul class="skill-card__list">
+          <li>
+            <span class="skill-item__name">SQL &amp; Relational Database Design</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:82%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">Oracle &amp; phpMyAdmin Administration</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:75%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">ERD Schema Design &amp; Analysis</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:80%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">Database Security &amp; Hardening</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:72%"></div></div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="skill-card" data-reveal="flip" data-delay="400">
+        <div class="skill-card__header">
+          <span class="skill-card__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </span>
+          <h3 class="skill-card__title" data-i18n="skills.security">الأمن السيبراني (Cybersecurity)</h3>
+        </div>
+        <ul class="skill-card__list">
+          <li>
+            <span class="skill-item__name">Penetration Testing &amp; Vulnerability Assessment</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:78%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">Vulnerability Remediation &amp; Hardening</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:73%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">OWASP Top 10 &amp; SQL Injection Prevention</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:82%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">Access Control &amp; Authentication</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:76%"></div></div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="skill-card" data-reveal="flip" data-delay="550">
+        <div class="skill-card__header">
+          <span class="skill-card__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          </span>
+          <h3 class="skill-card__title" data-i18n="skills.tools">الشبكات والتشفير والتحليل</h3>
+        </div>
+        <ul class="skill-card__list">
+          <li>
+            <span class="skill-item__name">Wireshark Traffic &amp; Packet Analysis</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:72%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">Network Security &amp; Threat Detection</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:68%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">Cryptography, Encryption &amp; Security Auditing</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:70%"></div></div>
+          </li>
+          <li>
+            <span class="skill-item__name">Isolated Sandbox Malware Analysis &amp; IoCs</span>
+            <div class="skill-item__bar"><div class="skill-item__fill" style="--skill-w:78%"></div></div>
+          </li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
 
     <!-- Projects Section -->
     <section class="projects section section--subtle" id="projects">
       <div class="container">
-        <h2 class="section__title" data-i18n="projects.title">المشاريع والأعمال</h2>
+        <h2 class="section__title" data-reveal="up" data-i18n="projects.title">المشاريع والأعمال</h2>
 
-        <div class="projects__filters" role="group" aria-label="Filter projects by category">
+        <div class="projects__filters" data-reveal="fade" data-delay="200" role="group" aria-label="Filter projects by category">
           <button type="button" class="filter-btn active" data-filter="all" data-i18n="projects.filter_all">الكل</button>
           <button type="button" class="filter-btn" data-filter="frontend">Frontend</button>
           <button type="button" class="filter-btn" data-filter="backend">Backend & DB</button>
@@ -171,7 +521,14 @@
         </div>
 
         <div class="projects__grid" id="projects-grid">
-          <article class="project-card" data-category="frontend">
+          <article class="project-card" data-reveal="up" data-delay="100" data-category="frontend">
+            <!-- Task 5: Editor-style header -->
+            <div class="project-card__header">
+              <div class="project-card__dots"><span></span><span></span><span></span></div>
+              <div class="project-card__header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
+            </div>
             <div class="project-card__body">
               <span class="project-card__tag">Frontend</span>
               <h3 class="project-card__title">موقع البورتفوليو الشخصي</h3>
@@ -188,7 +545,13 @@
             </div>
           </article>
 
-          <article class="project-card" data-category="backend">
+          <article class="project-card" data-reveal="up" data-delay="250" data-category="backend">
+            <div class="project-card__header">
+              <div class="project-card__dots"><span></span><span></span><span></span></div>
+              <div class="project-card__header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              </div>
+            </div>
             <div class="project-card__body">
               <span class="project-card__tag">Backend & DB</span>
               <h3 class="project-card__title">نظام إدارة بيانات تجريبي</h3>
@@ -205,7 +568,13 @@
             </div>
           </article>
 
-          <article class="project-card" data-category="security">
+          <article class="project-card" data-reveal="up" data-delay="400" data-category="security">
+            <div class="project-card__header">
+              <div class="project-card__dots"><span></span><span></span><span></span></div>
+              <div class="project-card__header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+            </div>
             <div class="project-card__body">
               <span class="project-card__tag">Cybersecurity</span>
               <h3 class="project-card__title">تقرير فحص وتأمين تطبيق ويب</h3>
@@ -225,50 +594,79 @@
       </div>
     </section>
 
-    <!-- Experience Section -->
-    <section class="experience section" id="experience">
-      <div class="container">
-        <h2 class="section__title" data-i18n="experience.title">الخبرات والشهادات</h2>
-        <div class="timeline">
-          <div class="timeline__item">
-            <span class="timeline__date">2026</span>
-            <h3 class="timeline__title">متدرب قواعد بيانات وأمن تطبيقات</h3>
-            <p class="timeline__org">شركة تقنية (بيانات تجريبية)</p>
-            <p class="timeline__desc">المساهمة في تصميم جداول قواعد البيانات وتحسين أمان المنصات الإلكترونية.</p>
-          </div>
-
-          <div class="timeline__item">
-            <span class="timeline__date">2026</span>
-            <h3 class="timeline__title">برنامج تدريبي مكثف في الأمن السيبراني</h3>
-            <p class="timeline__org">أكاديمية تقنية متخصصة</p>
-            <p class="timeline__desc">إتمام مختبرات عملية في أمن تطبيقات الويب، تحليل البرمجيات، واكتشاف التهديدات.</p>
-          </div>
-
-          <div class="timeline__item">
-            <span class="timeline__date">2025 - مستمر</span>
-            <h3 class="timeline__title">بكالوريوس نظم المعلومات</h3>
-            <p class="timeline__org">الجامعة</p>
-            <p class="timeline__desc">دراسة هندسة النظم، قواعد البيانات، الشبكات، وتطوير التطبيقات.</p>
-          </div>
-        </div>
+   <!-- Experience Section -->
+<section class="experience section" id="experience">
+  <div class="container">
+    <h2 class="section__title" data-reveal="up" data-i18n="experience.title">الخبرات والشهادات</h2>
+    <div class="timeline">
+      <div class="timeline__item" data-reveal="right" data-delay="100" data-type="work">
+        <div class="timeline__icon-badge">🏢</div>
+        <span class="timeline__type-tag">خبرة عملية</span>
+        <span class="timeline__date">مارس - يونيو 2025</span>
+        <h3 class="timeline__title">قائد فريق قواعد البيانات والأمن السيبراني</h3>
+        <p class="timeline__org">شركة سحاب العالمية للتجارة (SIT) — قسم تقنية المعلومات</p>
+        <p class="timeline__desc">قيادة فريق قواعد البيانات وتولّي أمنها عبر منتجات القسم، وتصميم وإدارة قواعد البيانات باستخدام SQL و Oracle و phpMyAdmin ومخططات ERD، واكتشاف الثغرات وتطبيق إجراءات التحصين والحماية وتأمين المنصات الداخلية بالكامل.</p>
       </div>
-    </section>
 
+      <div class="timeline__item" data-reveal="right" data-delay="250" data-type="security">
+        <div class="timeline__icon-badge">🛡️</div>
+        <span class="timeline__type-tag">تحليل أمني</span>
+        <span class="timeline__date">تحليل حوادث وبرمجيات خبيثة</span>
+        <h3 class="timeline__title">محلل أمن سيبراني (Malware &amp; Sandbox Analysis)</h3>
+        <p class="timeline__org">تحليل عينة برمجية خبيثة متعددة المراحل (Confidential)</p>
+        <p class="timeline__desc">بناء وتشغيل بيئة معزولة بالكامل (Sandbox) لتحليل برمجية خبيثة انتشرت عبر الهندسة الاجتماعية، وتتبع سلسلة الهجوم من سرقة بيانات المتصفح وسحب الملفات إلى الباب الخلفي ومراقبة الحافظة، مع توثيق مؤشرات الاختراق (IoCs) وخطة المعالجة.</p>
+      </div>
+
+      <div class="timeline__item" data-reveal="right" data-delay="400" data-type="cert">
+        <div class="timeline__icon-badge">📜</div>
+        <span class="timeline__type-tag">شهادات وتدريب</span>
+        <span class="timeline__date">الشهادات والتدريب</span>
+        <h3 class="timeline__title">مقدمة في الأمن السيبراني وتدريب تطوير الويب</h3>
+        <p class="timeline__org">أكاديمية كاوست بالشراكة مع الهيئة الوطنية للأمن السيبراني · شركة سحاب (SIT)</p>
+        <p class="timeline__desc">إتمام برنامج مقدمة في الأمن السيبراني عبر أكاديمية كاوست والهيئة الوطنية للأمن السيبراني (التشفير، أمن الشبكات، أمن تطبيقات الويب، واختبار الاختراق)، بالإضافة إلى تدريب عملي في تطوير الويب داخل شركة سحاب العالمية للتجارة.</p>
+      </div>
+    </div>
+  </div>
+</section>
     <!-- Contact Section -->
     <section class="contact section section--subtle" id="contact">
       <div class="container">
-        <h2 class="section__title" data-i18n="contact.title">تواصل معي</h2>
+        <h2 class="section__title" data-reveal="up" data-i18n="contact.title">تواصل معي</h2>
         <div class="contact__grid">
-          <div class="contact__info">
+          <div class="contact__info" data-reveal="right" data-delay="150">
             <p data-i18n="contact.subtitle">هل لديك مشروع، فرصة تدريبية، أو استفسار تقني؟ يسعدني تواصلك.</p>
             <ul class="contact__links">
-              <li><strong>البريد الإلكتروني:</strong> <a href="mailto:example@email.com">example@email.com</a></li>
-              <li><strong>GitHub:</strong> <a href="https://github.com/Abdulrhman403" target="_blank" rel="noopener noreferrer">github.com/Abdulrhman403</a></li>
-              <li><strong>LinkedIn:</strong> <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">linkedin.com/in/username</a></li>
+              <li>
+                <span class="contact__link-icon contact__link-icon--email" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </span>
+                <div class="contact__link-text">
+                  <strong>البريد الإلكتروني</strong>
+                  <a href="mailto:example@email.com">example@email.com</a>
+                </div>
+              </li>
+              <li>
+                <span class="contact__link-icon contact__link-icon--github" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                </span>
+                <div class="contact__link-text">
+                  <strong>GitHub</strong>
+                  <a href="https://github.com/Abdulrhman403" target="_blank" rel="noopener noreferrer">github.com/Abdulrhman403</a>
+                </div>
+              </li>
+              <li>
+                <span class="contact__link-icon contact__link-icon--linkedin" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </span>
+                <div class="contact__link-text">
+                  <strong>LinkedIn</strong>
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">linkedin.com/in/username</a>
+                </div>
+              </li>
             </ul>
           </div>
 
-          <form class="contact__form" id="contact-form" novalidate>
+          <form class="contact__form" data-reveal="left" data-delay="200" id="contact-form" novalidate>
             <div class="form-group">
               <label for="name" data-i18n="contact.label_name">الاسم الكامل</label>
               <input type="text" id="name" name="name" required placeholder="أدخل اسمك">

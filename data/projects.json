@@ -1,50 +1,66 @@
 [
   {
     "id": 1,
-    "category": "frontend",
-    "tag": "Frontend",
+    "category": "backend",
+    "tag": "Database & Security",
     "title": {
-      "ar": "موقع البورتفوليو الشخصي",
-      "en": "Personal Portfolio Website"
+      "ar": "منصة Weefy — هندسة وتأمين قواعد البيانات",
+      "en": "Weefy Platform — Database Architecture & Security"
     },
     "description": {
-      "ar": "موقع تعريفي متجاوب بالكامل يدعم اللغتين العربية والإنجليزية والوضع الليلي مع فلترة ديناميكية للمشاريع.",
-      "en": "Fully responsive personal portfolio supporting Arabic & English, Dark Mode, and dynamic project filtering."
+      "ar": "تصميم وإدارة قاعدة بيانات متكاملة لمنصة حجز خدمات ومراسلة العملاء، مع تأمين بيانات المستخدمين والحجوزات عبر ضوابط الوصول والتحقق الصارم من المدخلات.",
+      "en": "Designed and managed the relational database for a beauty-salon booking and customer messaging platform, securing user and booking data with strict access controls and input validation."
     },
-    "tech": ["HTML5", "CSS3", "JavaScript", "JSON"],
+    "tech": ["SQL", "ERD Design", "Access Control", "Input Validation"],
     "liveUrl": "#",
-    "repoUrl": "https://github.com/Abdulrhman403/portfolio"
+    "repoUrl": "https://github.com/Abdulrhman403"
   },
   {
     "id": 2,
     "category": "backend",
-    "tag": "Backend & DB",
+    "tag": "Backend & Hardening",
     "title": {
-      "ar": "نظام إدارة بيانات تجريبي",
-      "en": "Relational Database Management System"
+      "ar": "منصة Beboard — إدارة الفرق والصلاحيات",
+      "en": "Beboard — Team Management & DB Hardening"
     },
     "description": {
-      "ar": "تصميم مخطط قاعدة بيانات علائقية متكاملة لإدارة العمليات والتقارير مع استعلامات محسّنة.",
-      "en": "Designed an integrated relational database schema for operations and reporting with optimized queries."
+      "ar": "بناء وإدارة قاعدة بيانات لمنصة إدارة فرق ومهام داخلية، مع تطبيق صلاحيات الوصول المبنية على الأدوار (RBAC) وتحصين طبقة البيانات ضد ثغرات الويب الشائعة.",
+      "en": "Built and administered the database for an internal team and task-management platform, enforcing role-based access control (RBAC) and hardening the data layer against web vulnerabilities."
     },
-    "tech": ["SQL", "Oracle", "ERD"],
+    "tech": ["SQL", "Oracle", "RBAC", "DB Hardening"],
     "liveUrl": "#",
     "repoUrl": "https://github.com/Abdulrhman403"
   },
   {
     "id": 3,
     "category": "security",
-    "tag": "Cybersecurity",
+    "tag": "Malware Analysis",
     "title": {
-      "ar": "تقرير فحص وتأمين تطبيق ويب",
-      "en": "Web Application Security Assessment"
+      "ar": "تحليل برمجية خبيثة متعددة المراحل (Sandbox)",
+      "en": "Multi-Stage Malware & Incident Analysis"
     },
     "description": {
-      "ar": "تحليل ثغرات تطبيقات الويب الشائعة وتطبيق حلول الحماية ضد هجمات الحقن وتزوير الطلبات.",
-      "en": "Analyzed common web vulnerabilities and implemented defenses against injection and CSRF attacks."
+      "ar": "تحليل هجوم هندسة اجتماعية داخل بيئة معزولة (Sandbox)، وتتبّع سلسلة الهجوم من سرقة بيانات المتصفح واستخراج الملفات إلى الباب الخلفي ومراقبة الحافظة، مع توثيق مؤشرات الاختراق (IoCs) وخطة المعالجة.",
+      "en": "Analyzed a multi-stage social engineering malware sample inside a fully isolated sandbox, mapping browser credential theft, bulk file exfiltration, and a persistent backdoor with full IoCs and remediation."
     },
-    "tech": ["OWASP", "Web Security", "Linux"],
+    "tech": ["Malware Analysis", "Sandbox", "IoCs", "Incident Report"],
     "liveUrl": "#",
     "repoUrl": "https://github.com/Abdulrhman403"
+  },
+  {
+    "id": 4,
+    "category": "frontend",
+    "tag": "Frontend",
+    "title": {
+      "ar": "موقع البورتفوليو التفاعلي الشخصي",
+      "en": "Interactive Personal Portfolio Website"
+    },
+    "description": {
+      "ar": "بورتفوليو متجاوب بتثيم الورق والحبر مع تجربة مقدمة سينمائية، ودعم اللغتين العربية والإنجليزية والوضع الليلي وفلترة ديناميكية للمشاريع.",
+      "en": "Responsive Paper & Ink portfolio featuring an interactive onboarding ritual, bilingual support (Arabic/English), Dark Mode, and dynamic project filtering."
+    },
+    "tech": ["HTML5", "CSS3", "JavaScript", "JSON"],
+    "liveUrl": "#",
+    "repoUrl": "https://github.com/Abdulrhman403/portfolio"
   }
 ]

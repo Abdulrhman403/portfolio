@@ -137,6 +137,14 @@ textarea {
   color: var(--color-primary);
 }
 /* Header & Navbar */
+/* Hide top navigation bar until the user starts the journey */
+body:not(.journey-started) .header {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
 .header {
   position: sticky;
   top: 0;
@@ -144,7 +152,7 @@ textarea {
   height: var(--navbar-height);
   background-color: var(--bg-surface);
   border-bottom: 1px solid var(--border-color);
-  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.5s ease, background-color var(--transition-normal), border-color var(--transition-normal);
 }
 
 .nav {
@@ -245,96 +253,560 @@ textarea {
     padding-block: var(--space-xs);
   }
 }
-/* Hero Section */
-.hero {
-  min-height: calc(100vh - var(--navbar-height));
+/* Journey Lock & Navbar Reveal */
+body.journey-locked {
+  overflow: hidden;
+  height: 100vh;
+}
+
+body.journey-locked .header {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+}
+
+.header {
+  transition: opacity 0.5s ease, transform 0.5s ease, background-color var(--transition-normal);
+}
+
+/* Journey Lock & Navbar Reveal */
+body.journey-locked {
+  overflow: hidden;
+  height: 100vh;
+}
+
+body.journey-locked .header {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+}
+
+.header {
+  transition: opacity 0.6s ease, transform 0.6s ease, background-color var(--transition-normal);
+}
+
+/* ==========================================================================
+   Interactive Gate (Red Cinema Curtains + Draggable Flashlight)
+   ========================================================================== */
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
   display: flex;
   align-items: center;
-}
-
-.hero__container {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  align-items: center;
-  gap: var(--space-xl);
-}
-
-.hero__badge {
-  display: inline-block;
-  padding: 0.35rem 0.9rem;
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-full);
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--color-primary);
-  margin-bottom: var(--space-sm);
-}
-
-.hero__title {
-  font-size: var(--fs-4xl);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: var(--space-xs);
-}
-
-.hero__subtitle {
-  font-size: var(--fs-xl);
-  font-weight: 600;
-  color: var(--color-primary);
-  margin-bottom: var(--space-md);
-}
-
-.hero__description {
-  font-size: var(--fs-lg);
-  color: var(--text-muted);
-  max-width: 560px;
-  margin-bottom: var(--space-lg);
-}
-
-.hero__buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-}
-
-.hero__image-wrapper {
-  display: flex;
   justify-content: center;
+  text-align: center;
+  user-select: none;
+  touch-action: none;
+  overflow: hidden;
+  background-color: #050505;
 }
 
-.hero__image {
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
+/* Transition gate from fixed overlay into permanent first hero screen */
+.gate.unlocked {
+  position: relative;
+  inset: auto;
+  z-index: 1;
+  min-height: 100vh;
+  pointer-events: auto;
+  background-color: #f1ede4;
+  background-image:
+    radial-gradient(#000000 0.5px, transparent 0.5px),
+    radial-gradient(#000000 0.5px, #f1ede4 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* Hide curtains, darkness, torch, hint, and skip button once unlocked */
+.gate.unlocked .gate__curtain,
+.gate.unlocked .gate__rope-wrapper,
+.gate.unlocked .gate__darkness,
+.gate.unlocked .gate__torch,
+.gate.unlocked .gate__hint,
+.gate.unlocked .gate__skip {
+  opacity: 0 !important;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Keep headline & wrapper visible after unlock */
+.gate.unlocked .gate__content {
+  opacity: 1 !important;
+  z-index: 5;
+}
+
+/* Hide circular hold button and reveal the journey start button */
+.gate.unlocked .gate__hold-btn {
+  display: none;
+}
+.gate__start-btn[hidden] {
+  display: none !important;
+}
+.gate__start-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 1rem 2.2rem;
+  font-family: 'IBM Plex Sans Arabic', Georgia, serif;
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  color: #f1ede4;
+  background-color: #1a1a0c;
+  border: 3px solid #1a1a0c;
+  box-shadow: 6px 6px 0px #e33e14;
+  cursor: pointer;
+  animation: stampPopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+}
+
+.gate__start-btn:hover {
+  background-color: #e33e14;
+  color: #1a1a0c;
+  box-shadow: 6px 6px 0px #1a1a0c;
+  transform: translate(-2px, -2px);
+}
+.gate__rocket {
+  display: inline-block;
+  font-size: 1.25em;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gate__start-btn:hover .gate__rocket {
+  transform: translate(-4px, -4px) rotate(-12deg) scale(1.15);
+}
+@keyframes stampPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Top & Bottom parchment panels that split open upon unlock */
+.gate__panel {
+  position: absolute;
+  left: -2%;
+  width: 104%;
+  height: 52%;
+  background-color: #f1ede4;
+  background-image:
+    radial-gradient(#000000 0.5px, transparent 0.5px),
+    radial-gradient(#000000 0.5px, #f1ede4 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: 1;
+}
+
+.gate__panel--top {
+  top: 0;
+  border-bottom: 6px double #1a1a0c;
+}
+
+.gate__panel--bottom {
+  bottom: 0;
+  border-top: 6px double #1a1a0c;
+}
+
+.gate.unlocked .gate__panel--top {
+  transform: translateY(-108%);
+}
+
+.gate.unlocked .gate__panel--bottom {
+  transform: translateY(108%);
+}
+
+/* Deep cinematic burgundy velvet curtains */
+.gate__curtain {
+  position: absolute;
+  top: -2%;
+  width: 52%;
+  height: 104%;
+  z-index: 10;
+  pointer-events: none;
+  background-color: #1c0306;
+  background-image:
+    /* Subtle overhead stage light falloff */
+    radial-gradient(ellipse at 50% -10%, rgba(255, 220, 210, 0.07) 0%, rgba(0, 0, 0, 0.65) 75%),
+    /* Deep organic velvet folds */
+    repeating-linear-gradient(
+      90deg,
+      #0c0102 0px,
+      #220408 18px,
+      #3b070e 32px,
+      #4a0912 40px,
+      #1f0306 56px,
+      #0c0102 76px
+    );
+  box-shadow:
+    inset 0 -50px 90px rgba(0, 0, 0, 0.95),
+    inset 0 30px 60px rgba(0, 0, 0, 0.85),
+    0 0 50px rgba(0, 0, 0, 0.95);
+  will-change: transform;
+}
+
+.gate__curtain--left {
+  left: -1%;
+  transform-origin: top left;
+  border-right: 1px solid rgba(180, 140, 70, 0.35);
+  box-shadow: inset -18px 0 30px rgba(0, 0, 0, 0.85), 10px 0 30px rgba(0, 0, 0, 0.9);
+}
+
+.gate__curtain--right {
+  right: -1%;
+  transform-origin: top right;
+  border-left: 1px solid rgba(180, 140, 70, 0.35);
+  box-shadow: inset 18px 0 30px rgba(0, 0, 0, 0.85), -10px 0 30px rgba(0, 0, 0, 0.9);
+}
+
+/* Full open state triggered once the cord is pulled */
+.gate.curtains-opened .gate__curtain--left {
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateX(-102%) scaleX(0.65) !important;
+}
+
+.gate.curtains-opened .gate__curtain--right {
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateX(102%) scaleX(0.65) !important;
+}
+
+/* Interactive Golden Pull Cord & Tassel */
+.gate__rope-wrapper {
+  position: absolute;
+  top: -40px;
+  right: 12%;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: grab;
+  touch-action: none;
+  transform-origin: top center;
+  animation: ropeSway 2.8s ease-in-out infinite alternate;
+  transition: opacity 0.5s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gate__rope-wrapper.pulling {
+  cursor: grabbing;
+  animation: none;
+  transition: none;
+}
+
+.gate.curtains-opened .gate__rope-wrapper {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-120%);
+}
+
+/* Braided gold cord */
+.gate__rope-line {
+  width: 8px;
+  height: 230px;
+  background: repeating-linear-gradient(
+    45deg,
+    #92400e 0px,
+    #d97706 4px,
+    #fbbf24 8px,
+    #b45309 12px
+  );
+  box-shadow:
+    3px 4px 10px rgba(0, 0, 0, 0.75),
+    0 0 10px rgba(251, 191, 36, 0.25);
+  border-radius: 4px;
+  transition: box-shadow 0.3s ease;
+}
+
+.gate__rope-wrapper:hover .gate__rope-line {
+  box-shadow:
+    3px 4px 10px rgba(0, 0, 0, 0.75),
+    0 0 18px rgba(251, 191, 36, 0.55);
+}
+
+/* Heavy golden handle / tassel */
+.gate__rope-tassel {
+  position: relative;
+  width: 28px;
+  height: 54px;
+  margin-top: -2px;
+  border-radius: 14px 14px 6px 6px;
+  background: linear-gradient(135deg, #fde68a 0%, #d97706 55%, #78350f 100%);
+  border: 2px solid #fef3c7;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.8),
+    0 0 18px rgba(251, 191, 36, 0.5),
+    0 0 32px rgba(251, 191, 36, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: tasselGlow 2s ease-in-out infinite alternate;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+/* Glow pulse label hint */
+.gate__rope-tassel::after {
+  content: 'اسحب';
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-family: 'Tajawal', sans-serif;
+  color: #fbbf24;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.8);
+  transition: opacity 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.gate__rope-wrapper:hover .gate__rope-tassel::after,
+.gate__rope-wrapper:focus-visible .gate__rope-tassel::after {
+  opacity: 1;
+}
+
+.gate__rope-wrapper:hover .gate__rope-tassel {
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.9),
+    0 0 36px rgba(251, 191, 36, 0.85),
+    0 0 60px rgba(251, 191, 36, 0.45);
+  transform: scale(1.08);
+}
+
+.gate__rope-wrapper.pulling .gate__rope-tassel {
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.9),
+    0 0 48px rgba(251, 191, 36, 1),
+    0 0 80px rgba(253, 230, 138, 0.6);
+  animation: none;
+}
+
+.gate__rope-ring {
+  width: 12px;
+  height: 12px;
   border-radius: var(--radius-full);
-  border: 4px solid var(--color-primary);
-  background-color: var(--bg-surface);
-  box-shadow: var(--shadow-lg);
+  border: 2px solid #451a03;
 }
 
-@media (max-width: 768px) {
-  .hero__container {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
+@keyframes ropeSway {
+  0% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(1.5deg); }
+}
 
-  .hero__image-wrapper {
-    order: -1;
+/* Breathing golden glow on the tassel */
+@keyframes tasselGlow {
+  0% {
+    box-shadow:
+      0 6px 16px rgba(0, 0, 0, 0.8),
+      0 0 14px rgba(251, 191, 36, 0.4),
+      0 0 28px rgba(251, 191, 36, 0.2);
   }
+  100% {
+    box-shadow:
+      0 6px 16px rgba(0, 0, 0, 0.8),
+      0 0 30px rgba(251, 191, 36, 0.85),
+      0 0 55px rgba(253, 230, 138, 0.45);
+  }
+}
 
-  .hero__image {
-    width: 220px;
-    height: 220px;
-  }
+/* Foreground parchment/ink content beneath the darkness mask */
+.gate__content {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  padding-inline: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
 
-  .hero__description {
-    margin-inline: auto;
-  }
+.gate__hint {
+  font-family: monospace;
+  font-size: var(--fs-xs);
+  color: #5c5545;
+  margin-bottom: var(--space-xs);
+  letter-spacing: 1px;
+}
 
-  .hero__buttons {
-    justify-content: center;
-  }
+.gate__headline {
+  font-family: 'IBM Plex Sans Arabic', Georgia, serif;
+  font-size: clamp(1.9rem, 4.8vw, 3.1rem);
+  font-weight: 800;
+  line-height: 1.3;
+  color: #1a1a0c;
+  margin-bottom: var(--space-xl);
+}
+
+.gate__headline .highlight {
+  display: inline-block;
+  color: #e33e14;
+  background-color: rgba(227, 62, 20, 0.08);
+  border: 3px solid #1a1a0c;
+  padding: 0.25rem 0.75rem;
+  margin-top: 0.75rem;
+  transform: rotate(-1.5deg);
+  box-shadow: 4px 4px 0px #1a1a0c;
+}
+
+/* Press & Hold ink circular seal */
+.gate__hold-btn {
+  position: relative;
+  width: 136px;
+  height: 136px;
+  border-radius: var(--radius-full);
+  background: #f1ede4;
+  border: 4px solid #1a1a0c;
+  color: #1a1a0c;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 6px 6px 0px #1a1a0c;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.gate__hold-btn:hover {
+  transform: translate(-2px, -2px) scale(1.03);
+  box-shadow: 8px 8px 0px #1a1a0c;
+}
+
+.gate__hold-btn.holding {
+  animation: brutalShake 0.15s infinite;
+}
+
+.gate__ring {
+  position: absolute;
+  inset: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  transform: rotate(-90deg);
+}
+
+.gate__ring-bg {
+  fill: none;
+  stroke: rgba(26, 26, 12, 0.08);
+  stroke-width: 5;
+}
+
+.gate__ring-progress {
+  fill: none;
+  stroke: #e33e14;
+  stroke-width: 6;
+  stroke-linecap: square;
+  stroke-dasharray: 339.29;
+  stroke-dashoffset: 339.29;
+}
+
+.gate__hold-text {
+  font-family: 'IBM Plex Sans Arabic', Georgia, serif;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Pitch-black overlay with tight flashlight cutout */
+.gate__darkness {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 125px at var(--x, 18%) var(--y, 24%),
+    rgba(255, 250, 230, 0.04) 0%,
+    rgba(0, 0, 0, 0.98) 72%,
+    #000000 100%
+  );
+  transition: opacity 0.35s ease;
+}
+/* Draggable flashlight handle */
+.gate__torch {
+  position: absolute;
+  left: var(--x, 18%);
+  top: var(--y, 24%);
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  border: 2px dashed rgba(251, 191, 36, 0.85);
+  background: rgba(251, 191, 36, 0.12);
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.45);
+  z-index: 4;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  animation: torchPulse 1.8s infinite ease-in-out;
+}
+
+.gate__torch--hidden {
+  opacity: 0 !important;
+  transform: translate(-50%, -50%) scale(0.4) !important;
+}
+
+.gate__torch:active,
+.gate__torch.dragging {
+  cursor: grabbing;
+  animation: none;
+  border-style: solid;
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.gate__torch-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: #fbbf24;
+}
+
+
+
+.gate__skip {
+  position: absolute;
+  bottom: var(--space-lg);
+  inset-inline-end: var(--space-lg);
+  z-index: 5;
+  background-color: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.35rem 0.85rem;
+  color: #e2e8f0;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.gate__skip:hover {
+  border-color: #fbbf24;
+  color: #fbbf24;
+}
+
+/* Cinema Curtains & Torch Keyframes */
+@keyframes curtainOpenLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-102%); }
+}
+
+@keyframes curtainOpenRight {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(102%); }
+}
+
+@keyframes torchPulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(251, 191, 36, 0.35); }
+  50% { box-shadow: 0 0 26px rgba(251, 191, 36, 0.85); }
+}
+
+@keyframes brutalShake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-3px, 2px) rotate(-1deg); }
+  50% { transform: translate(3px, -1px) rotate(1deg); }
+  75% { transform: translate(-2px, -2px) rotate(0.5deg); }
 }
 /* About Section */
 .about__grid {
@@ -732,4 +1204,392 @@ textarea {
     flex-direction: column;
     text-align: center;
   }
+}
+  /* ==========================================================================
+   Interactive 3-Step Onboarding Ritual Modal
+   ========================================================================== */
+.gate.journey-completed {
+  display: none !important;
+}
+
+.onboard[hidden],
+.onboard__pane[hidden],
+.onboard__win[hidden],
+.onboard__color-result[hidden] {
+  display: none !important;
+}
+
+.onboard {
+  --onboard-accent: #e33e14;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background-color: rgba(26, 26, 12, 0.72);
+  backdrop-filter: blur(4px);
+  animation: fadeInOverlay 0.35s ease forwards;
+}
+
+.onboard__card {
+  width: 100%;
+  max-width: 540px;
+  background-color: #f1ede4;
+  color: #1a1a0c;
+  border: 3px solid #1a1a0c;
+  box-shadow: 10px 10px 0px var(--onboard-accent);
+  padding: 1.75rem;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+  animation: stampPopIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 3-Level Progress Bar */
+.onboard__progress {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px dashed rgba(26, 26, 12, 0.25);
+}
+
+.onboard__step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0.65rem;
+  border: 2px solid rgba(26, 26, 12, 0.2);
+  background-color: rgba(255, 255, 255, 0.45);
+  opacity: 0.55;
+  transition: all 0.35s ease;
+}
+
+.onboard__step.active,
+.onboard__step.completed {
+  opacity: 1;
+  border-color: #1a1a0c;
+  background-color: var(--onboard-accent);
+  color: #ffffff;
+  box-shadow: 3px 3px 0px #1a1a0c;
+}
+
+.onboard__step-num {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.onboard__step-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Panes & Typography */
+.onboard__pane {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  animation: paneSlideIn 0.35s ease forwards;
+}
+
+.onboard__badge {
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #ffffff;
+  background-color: var(--onboard-accent);
+  border: 2px solid #1a1a0c;
+  transition: background-color 0.35s ease;
+}
+
+.onboard__title {
+  font-size: clamp(1.45rem, 3vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.3;
+  color: #1a1a0c;
+  margin: 0;
+}
+
+.onboard__desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #2c2c1e;
+  margin: 0;
+}
+
+/* Action Buttons */
+.onboard__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #f1ede4;
+  background-color: #1a1a0c;
+  border: 2.5px solid #1a1a0c;
+  box-shadow: 5px 5px 0px var(--onboard-accent);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+}
+
+.onboard__btn:hover:not(:disabled) {
+  background-color: var(--onboard-accent);
+  color: #ffffff;
+  box-shadow: 5px 5px 0px #1a1a0c;
+  transform: translate(-2px, -2px);
+}
+
+.onboard__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.onboard__btn--hype:hover {
+  animation: hypeWiggle 0.35s ease;
+}
+
+/* Step 1B: Brain Warmup Game */
+.onboard__science {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  padding: 0.75rem 0.9rem;
+  background-color: rgba(255, 255, 255, 0.65);
+  border-inline-start: 4px solid var(--onboard-accent);
+  margin: 0;
+}
+
+.onboard__alert {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  background-color: #fef08a;
+  border: 2px solid #1a1a0c;
+  box-shadow: 3px 3px 0px #1a1a0c;
+}
+
+.onboard__game-prompt {
+  font-weight: 700;
+  font-size: 0.98rem;
+  margin: 0.25rem 0 0;
+}
+
+.onboard__sequence {
+  display: flex;
+  gap: 0.75rem;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.6rem;
+  background-color: #1a1a0c;
+  color: #f1ede4;
+  font-size: 1.5rem;
+  letter-spacing: 0.25rem;
+}
+
+.onboard__tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.onboard__tile {
+  aspect-ratio: 1;
+  font-size: 1.75rem;
+  background-color: #ffffff;
+  border: 2.5px solid #1a1a0c;
+  box-shadow: 4px 4px 0px #1a1a0c;
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.15s ease;
+}
+
+.onboard__tile:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  background-color: #fef08a;
+}
+
+.onboard__tile:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #1a1a0c;
+}
+
+.onboard__tile.is-correct {
+  background-color: #bbf7d0;
+  border-color: #15803d;
+}
+
+.onboard__tile.is-wrong {
+  background-color: #fecaca;
+  animation: hypeWiggle 0.3s ease;
+}
+
+.onboard__win {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding-top: 0.85rem;
+  border-top: 2px dashed #1a1a0c;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.onboard__win-stamp {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #15803d;
+  animation: stampPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Step 2: Color Choices */
+.onboard__colors {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.onboard__color-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 0.85rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a1a0c;
+  background-color: #ffffff;
+  border: 2.5px solid #1a1a0c;
+  box-shadow: 4px 4px 0px #1a1a0c;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.onboard__color-btn:hover,
+.onboard__color-btn.selected {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px var(--onboard-accent);
+  background-color: #fffbeb;
+}
+
+.onboard__swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #1a1a0c;
+  flex-shrink: 0;
+}
+
+.onboard__color-result {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #ffffff;
+  border: 2.5px solid #1a1a0c;
+  border-inline-start: 6px solid var(--onboard-accent);
+  animation: paneSlideIn 0.3s ease forwards;
+}
+
+.onboard__color-tip {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin: 0 0 0.75rem;
+}
+
+/* Step 3: Textarea */
+.onboard__textarea {
+  width: 100%;
+  padding: 0.85rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #1a1a0c;
+  background-color: #ffffff;
+  border: 2.5px solid #1a1a0c;
+  box-shadow: 4px 4px 0px #1a1a0c;
+  resize: vertical;
+}
+
+.onboard__textarea:focus {
+  outline: none;
+  box-shadow: 4px 4px 0px var(--onboard-accent);
+}
+
+/* Celebration Confetti Particles */
+.confetti-piece {
+  position: fixed;
+  top: -12px;
+  width: 10px;
+  height: 14px;
+  z-index: 9999;
+  pointer-events: none;
+  animation: confettiFall var(--fall-duration, 2.2s) linear forwards;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes paneSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hypeWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-4deg) scale(1.04); }
+  75% { transform: rotate(4deg) scale(1.04); }
+}
+.onboard__color-action[hidden] {
+  display: none !important;
+}
+
+.onboard__color-action {
+  width: 100%;
+  margin-top: 0.5rem;
+  animation: paneSlideIn 0.3s ease forwards;
+}
+
+.onboard__tip-card {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  background-color: #ffffff;
+  border: 2.5px solid #1a1a0c;
+  border-inline-start: 6px solid var(--onboard-accent);
+  box-shadow: 4px 4px 0px #1a1a0c;
+}
+
+.onboard__tip-heading {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--onboard-accent);
+  margin-bottom: 0.35rem;
+}
+
+.onboard__tip-body {
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: #1a1a0c;
+  margin: 0;
 }
